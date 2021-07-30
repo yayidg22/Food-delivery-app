@@ -4,11 +4,11 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import testImage from '../../Resources/images/purpleBackground.png';
 import { Button } from 'react-native-elements';
 
-const CardArticle = ({ item }) => {
+const CardArticle = ({ item,onCartPress }) => {
     const [markAsFav,setMarkAsFav] = React.useState(false);
     return (
         <View style={styles.container}>
-            <Image style={styles.image} width={wp('42%')} height={hp('18%')} source={item?.image} />
+            <Image style={styles.image} width={wp('42%')} height={hp('17%')} source={item?.image} />
             <View>
                 <Text style={styles.title}>{item?.title}</Text>
                 <View style={{height:hp('1%')}}/>
@@ -19,7 +19,7 @@ const CardArticle = ({ item }) => {
                 <View style={{height:hp('2%')}}/>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Button  onPress={() => {setMarkAsFav(!markAsFav)}}  icon={{name:markAsFav ? 'heart':'heart-o',size:wp('5%'),color:markAsFav ? 'red':'black',type:'font-awesome'}} buttonStyle={[styles.button, { backgroundColor: '#FFFFFF' }]} />
-                <Button onPress={() => {/*OPEN MODAL WITH ITEM SCREEN*/}} icon={{name:'shopping-cart',size:wp('5%'),color:'white'}} titleStyle={{ color: "#616161" }}  buttonStyle={styles.button} />
+                <Button onPress={onCartPress} icon={{name:'shopping-cart',size:wp('5%'),color:'white'}} titleStyle={{ color: "#616161" }}  buttonStyle={styles.button} />
                 </View>
             </View>
         </View>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: wp('42%'),
-        height: hp('18%'),
+        height: hp('17%'),
         borderRadius: wp('3%'),
     },
     title: {
