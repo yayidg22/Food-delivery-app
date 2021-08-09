@@ -17,9 +17,10 @@ import fruits from '../Resources/categoriesImages/fruits.jpg';
 import sodas from '../Resources/categoriesImages/sodas.jpg';
 import sweets from '../Resources/categoriesImages/sweets.jpg';
 
-export default function Home() {
+import { connect } from 'react-redux';
+import { updateCart } from '../Redux/actions/UserActions';
 
-
+function Home({ cartList, updateCart }) {
     const Categories = [
         {
             image: brocoli,
@@ -182,6 +183,8 @@ export default function Home() {
     const [itemViewVisible, setItemViewVisible] = React.useState(false);
     const [itemViewData, setItemViewData] = React.useState();
 
+    const [localCart,setLocalCart] = React.useState(cartList);
+
 
     const filterCategoriesData = (filterValue) => {
         const dataFiltered = Categories.filter((item) => {
@@ -215,6 +218,17 @@ export default function Home() {
         setItemViewData(item);
     }
 
+
+    const addItemToCart =  (item) => {
+        let cart = [];
+        if (cartList != undefined) {
+           cart =  cartList;
+         //  setLocalCart(prev => prev.concat(cartList))
+        }
+         cart.push(item);
+         console.log('cartList',cartList)
+         updateCart(cart);
+    }
 
     return (
 
@@ -256,19 +270,28 @@ export default function Home() {
                 </View>
             </Overlay>
 
-            <Overlay overlayStyle={{height:hp('105%')}} isVisible={itemViewVisible} animationType="slide">
-            <StatusBar style="light" />
+            <Overlay overlayStyle={{ height: hp('105%') }} isVisible={itemViewVisible} animationType="slide">
+                <StatusBar style="light" />
 
                 <ArticleView item={itemViewData} onClose={() => {
                     setItemViewVisible(false);
                     setCategoryViewIsEnable(true);
-                }} /*onAddCartPress={} add to redux or another*/ />
+                }} onAddCartPress={() => addItemToCart(itemViewData)} />
             </Overlay>
 
 
         </View>
     );
 }
+
+
+const mapStateToProps = state => {
+    return {
+        cartList: state.cartItems,
+    }
+}
+
+export default connect(mapStateToProps, { updateCart })(Home);
 
 const styles = StyleSheet.create({
     container: {

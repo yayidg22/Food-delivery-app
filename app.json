@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Implementacion de una UI ",
+    "githubUrl": "https://github.com/yayidg22/Food-delivery-app"
   }
 }
